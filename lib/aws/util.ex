@@ -27,4 +27,13 @@ defmodule AWS.Util do
     |> Enum.map(fn {k, v} -> {k, to_string(v)} end)
     |> :uri_string.compose_query()
   end
+
+  @doc """
+  Encode map into querystring suitable for s3
+  """
+  def encode_s3_query(value) do
+    value
+    |> Enum.map(fn {k, v} -> {k, to_string(v)} end)
+    |> URI.encode_query(:rfc3986)
+  end
 end

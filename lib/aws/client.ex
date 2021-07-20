@@ -98,6 +98,8 @@ defmodule AWS.Client do
     apply(mod, :request, [method, url, body, headers, options])
   end
 
+
+  def encode!(%{service: "s3"}, payload, :query), do: AWS.Util.encode_s3_query(payload)
   def encode!(_client, payload, :query), do: AWS.Util.encode_query(payload)
 
   def encode!(client, payload, format) do
