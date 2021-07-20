@@ -27,6 +27,10 @@ defmodule AWS.ClientTest do
     test "encodes into query", %{client: client} do
       assert AWS.Client.encode!(client, %{"q1" => "v1", "q2" => "v2"}, :query) == "q1=v1&q2=v2"
     end
+
+    test "encodes space as %20 in s3 requests", %{client: client} do
+      assert AWS.Client.encode!(%{client | service: "s3"}, %{"q1" => "v 1", "q 2" => "v2"}, :query) == "q%202=v2&q1=v%201"
+    end
   end
 
   describe "request/6" do
